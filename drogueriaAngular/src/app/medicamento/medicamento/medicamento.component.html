@@ -1,0 +1,203 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Medicamentos</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <a class="navbar-brand" href="#">Ventas</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+      
+  </nav>
+
+
+<div class="panel-header panel-header-sm">
+
+    <h1>Sistema de inventario Drogueria Konex</h1>
+</div>
+<div class= "main-content">
+
+    <div class="row container">
+        <div class="col-md-12">
+
+            <div class="row">
+                <pre>{{ medicamento | json }}</pre>
+            </div>
+            <br>
+            <br>
+            <h2>Gestion de medicamentos</h2>
+
+            <div class="card">
+                <div class="card card-body ">
+                    <form [formGroup] = "gestionarMedicamentoForm">
+                        <div class="row">
+                            <!-- Inicia Campo nombre medicamento -->
+                            <div class="col-6">
+                                <label for="nombre">Nombre Medicamento:</label>
+                                <input type="text" class="form-control" maxlength="50" id="nombre" 
+                                formControlName="nombre">
+                            
+                            </div>
+                            <!-- Finaliza Campo nombre medicamento -->
+
+                            <!-- Inicia Campo laboratorio -->
+                            <div class="col-6">
+                                <label for="laboratorio">Laboratorio:</label>
+                                <input type="text" class="form-control"  id="laboratorio" formControlName="laboratorio">
+                            
+                            </div>
+                            <!-- Finaliza Campo laboratorio -->
+                         </div>
+
+                         <br>
+
+                        <div class="row">
+                        
+                            <div class="col-6">
+                                <label for="fechaFabricacion">fecha Fabricacion:</label>
+                                <input type="date" class="form-control" maxlength="50" id="fechaFabricacion" 
+                                formControlName="fechaFabricacion">
+                            
+                            </div>
+
+                            <div class="col-6">
+                                <label for="fechaVencimiento">fecha Vencimiento:</label>
+                                <input type="date" class="form-control" maxlength="50" id="fechaVencimiento" 
+                                formControlName="fechaVencimiento">
+                            
+                            </div>
+                        
+                        </div>
+                        <br>
+                        <div class="row">   
+
+                            <div class="col-6">
+                                <label for="valorUnitario">ValorUnitario</label>
+                                <input type="number" class="form-control" id="valorUnitario" formControlName="valorUnitario">
+                            </div>
+
+                            <div class="col-6">
+                                <label for="cantidadStock">Cantidad</label>
+                                <input type="number" class="form-control" id="cantidadStock" formControlName="cantidadStock">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-6">
+                                <span></span>
+                            </div>
+                            <div class="col-6 text-right">
+                                <button type="button" class="btn btn-primary" (click)="crearMedicamento()">
+                                    crear
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <br>
+                        <br>
+                        <h2>Listado de medicamentos</h2>
+                        <div class = "row card"> 
+                            <div class="col-12 card">
+                                <table class="table">
+                                    <thead class="text-primary">
+                                        <tr>
+                                        <th >#</th>
+                                        <th >Nombre</th>
+                                        <th >Laboratorio</th>
+                                        <th scope="col">Cantidad Stock</th>
+                                        <th scope="col">valor Unitario</th>
+                                        <th scope="col">Fecha Fabricacion</th>
+                                        <th scope="col">Fecha Vencimiento</th>
+                        
+                                        </tr>
+                                    </thead>
+                                    <tbody >
+                                        <!--date:"MM/dd/yy"
+                                        | uppercase-->
+                                        <tr *ngFor="let medicamento of listaMedicamentos;let i = index;">
+                                            <th scope="row">{{i}}</th>
+                                            <!-- Transforma el nombre del comic a mayusculas -->
+                                            <td>{{medicamento.nombre}}</td>
+                                            <td>{{medicamento.laboratorio}}</td>
+                                            <td>{{medicamento.cantidadStock}}</td>
+                                            <td>{{medicamento.fechaFabricacion}}</td>
+                                            <td>{{medicamento.fechaVencimiento}}</td>                                       
+                                            <td class=" text-primary">
+                                            
+                                                
+                                                <i class="fas fa-pencil-alt 2x ml-1"  title="Editar" (click)="actualizarMedicamento(medicamento)"></i>
+                
+                                             <i class="far fa-times-circle 2x ml-1" title="Eliminar" (click)="confirmarEliminacion(medicamento)"></i>
+                                                <i class="fas fa-dollar-sign 2x ml-1" title="Comprar" (click)="comprarMedicamento()"></i>
+
+                                            </td>|
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+
+                    
+                    <!-- MODAL -->
+                    <ng-template #content let-c="close" let-d="dismiss">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">Venta de Medicamento</h4>                        
+                        </div>
+                        <div class="modal-body">
+                                <!--Formulario modal-->
+                                <form [formGroup] = "gestionarVentaForm">
+                                    <div class="row">
+                                        <!-- Inicia Campo nombre medicamento -->
+                                        <div class="col-6">
+                                            <label for="nombre">Nombre Medicamento:</label>
+                                            <input type="text" class="form-control" maxlength="50" id="nombre" 
+                                            formControlName="nombre" enable>
+                                        
+                                        </div>
+                                        <!-- Finaliza Campo nombre medicamento -->
+
+                                        <div class="col-6">
+                                            <label for="cantidadComprar">Cantidad a comprar</label>
+                                            <input type="number" class="form-control" id="cantidadComprar" formControlName="cantidadComprar">
+                                        </div>
+                                    
+                                    </div>
+                                    
+                              
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-dark" (click)="c(true)" >Vender</button>
+                                <button type="button" class="btn btn-outline-dark" (click)="c(false)">Cancelar</button>
+
+                               <!--  <button type="button" class="btn btn-outline-dark" (click)="c(true)">Eliminar Comic</button>-->
+                               <!--  <button type="button" class="btn btn-outline-dark" (click)="c(false)">Cancelar</button>-->
+                            </div>
+                        </ng-template>
+
+    
+                        
+                    <br>
+                    <br>
+                    <br>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                          <li class="page-item"><a class="page-link" href="#">3</a></li>
+                          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+
+                </div> 
+            </div>
+        </div>
+    </div>
+
+</div>
