@@ -51,13 +51,6 @@ public class GestionarDrogueriaController {
 	@Autowired
 	private IGestionarVenta ventaService;
     
-//		@Autowired
-//		MedicamentoRepository drogueriaRepository;
-//		
-//		@Autowired
-//		VentaRepository ventaRepository;
-		
-
 	
 	//localhost:8080/drogueria/crearMedicamento
 	@PostMapping("crearMedicamento")
@@ -104,7 +97,6 @@ public class GestionarDrogueriaController {
 		@PostMapping("crearVenta")
 		public ResponseEntity<?> crearVenta(@RequestBody VentaDTO ventaDto) throws DrogueriaKonexException {	
 			LOG.info("Inicia crearVenta con data {}", "");
-			
 			ventaService.crearVenta(ventaDto);
 			String response = "Se ha creado la venta exitosamente"; 
 			LOG.info("Finaliza createVenta() con response {}", response);

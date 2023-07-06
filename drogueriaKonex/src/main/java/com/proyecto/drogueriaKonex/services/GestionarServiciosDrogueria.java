@@ -79,13 +79,7 @@ public class GestionarServiciosDrogueria implements IGestionarMedicamento, IGest
 				nuevaCantidad = cantidadActual - cantidadComprar;
 				venta.setFechaVenta(fechaVenta);
 				medicamentoRepository.actualizarCantidadStockPorId(nuevaCantidad, idMedicamento);
-				
 				ventaRepository.save(venta);
-				System.out.println("Compra exitosa");
-				
-				System.out.println("esta es la cantidad " + cantidadComprar+ " id medica " +
-						idMedicamento + " cantidad actual " + cantidadActual + " nueva cantidad " +
-						nuevaCantidad + "nombre" + venta.getNombre());
 						
 			}	
 		}
@@ -140,9 +134,6 @@ public class GestionarServiciosDrogueria implements IGestionarMedicamento, IGest
 		// TODO Auto-generated method stub
 		
 		List<MedicamentoDTO> listaMedicamentosDto = new ArrayList<MedicamentoDTO>();
-	
-		//List<Medicamento> medicamentos =  medicamentoRepository.obtenerMedicamentos();
-		
 		List<Medicamento> medicamentos =  medicamentoRepository.findAll();
 		
 		for(Medicamento medicamento : medicamentos) {
